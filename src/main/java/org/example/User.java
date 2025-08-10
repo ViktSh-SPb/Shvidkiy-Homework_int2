@@ -26,6 +26,15 @@ public class User {
     @Column
     private LocalDateTime createdAt;
 
+    public User(){}
+
+    public User(String name, String email, Integer age, LocalDateTime createdAt) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.createdAt = createdAt;
+    }
+
     public Long getId() {
         return id;
     }
