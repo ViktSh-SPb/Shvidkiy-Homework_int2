@@ -9,10 +9,12 @@ import java.time.LocalDateTime;
  */
 public class App {
     public static void main(String[] args) {
-        User user = new User("Alice", "Alice@gmail.com", 20, LocalDateTime.now());
-        saveUser(user);
+        User user1 = new User("Alice", "alice@gmail.com", 20, LocalDateTime.now());
+        User user2 = new User("John", "john@gmail.com", 25, LocalDateTime.now());
+        saveUser(user1);
+        saveUser(user2);
 
-        User loaded = getUser(user.getId());
+        User loaded = getUser(user1.getId());
         System.out.println("Read: " + loaded);
 
         loaded.setName("Sara");
