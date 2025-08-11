@@ -13,15 +13,19 @@ public class App {
         userDao.save(user1);
         userDao.save(user2);
 
-        User loaded = getUser(user1.getId());
+        User loaded = userDao.getById(user1.getId());
         System.out.println("Read: " + loaded);
 
-        loaded.setName("Sara");
-        updateUser(loaded);
+        loaded.setAge(21);
+        userDao.update(loaded);
         System.out.println("Update: " + loaded);
 
-        deleteUser(loaded.getId());
-        System.out.println("Delete: "+ getUser(loaded.getId()));
+        userDao.delete(loaded);
+        System.out.println("Delete: "+ userDao.getById(loaded.getId()));
+
+        for(User user:userDao.getAll()){
+            System.out.println(user);
+        }
 
     }
 }
