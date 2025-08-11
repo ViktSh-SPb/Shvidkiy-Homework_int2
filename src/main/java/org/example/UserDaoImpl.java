@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
  * @author Viktor Shvidkiy
  */
 public class UserDaoImpl implements UserDao{
+    private static final Logger logger = LogManager.getLogger(UserDao.class);
 
     @Override
     public void save(User user) {
@@ -16,9 +19,14 @@ public class UserDaoImpl implements UserDao{
             tx= session.beginTransaction();
             session.persist(user);
             tx.commit();
+            logger.info("Запись сохранена: {}", user);
         }catch (Exception e){
-            if(tx!=null) tx.rollback();
-            e.printStackTrace();
+            if(tx!=null){
+                tx.rollback();
+                logger.warn("Произошла ошибка. Транзакция отменена.");
+            }
+            logger.error("Ошибка при сохранении записи.", e);
+            throw new RuntimeException("Не могу сохранить запись.", e);
         }
     }
 
