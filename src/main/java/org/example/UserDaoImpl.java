@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao{
                 tx.rollback();
                 logger.warn("Произошла ошибка. Транзакция отменена.");
             }
-            logger.error("Ошибка при сохранении записи.", e);
+            logger.error("Ошибка при сохранении записи: {}", e.getMessage());
             throw new RuntimeException("Не могу сохранить запись.", e);
         }
     }

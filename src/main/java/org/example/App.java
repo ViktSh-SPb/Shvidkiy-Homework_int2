@@ -1,6 +1,7 @@
 package org.example;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 /**
  * @author Viktor Shvidkiy
@@ -10,6 +11,8 @@ public class App {
         UserDao userDao = new UserDaoImpl();
         User user1 = new User("Alice", "alice@gmail.com", 20, LocalDateTime.now());
         User user2 = new User("John", "john@gmail.com", 25, LocalDateTime.now());
+        //Scanner scanner = new Scanner(System.in);
+        //scanner.nextLine();
         userDao.save(user1);
         userDao.save(user2);
 
