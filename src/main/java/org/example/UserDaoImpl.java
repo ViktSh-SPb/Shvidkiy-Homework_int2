@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import java.util.List;
 
 /**
@@ -64,7 +65,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void update(User user) {
         Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
             tx = session.beginTransaction();
             session.merge(user);
             tx.commit();
@@ -73,13 +75,16 @@ public class UserDaoImpl implements UserDao {
             if (tx != null) tx.rollback();
             logger.error("Ошибка при изменении записи: {}", e.getMessage());
             throw new RuntimeException("Ошибка при изменении записи.", e);
+        } finally {
+            session.close();
         }
     }
 
     @Override
     public void delete(User user) {
         Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
             tx = session.beginTransaction();
             session.remove(user);
             tx.commit();
@@ -88,6 +93,8 @@ public class UserDaoImpl implements UserDao {
             if (tx != null) tx.rollback();
             logger.error("Ошибка при удалении записи: {}", e.getMessage());
             throw new RuntimeException("Ошибка при удалении записи.", e);
+        } finally {
+            session.close();
         }
     }
 }
